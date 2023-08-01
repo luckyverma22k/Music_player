@@ -1,0 +1,88 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player Design</title>
+    <link rel="stylesheet" href="music.css">
+    <script src="https://kit.fontawesome.com/1895f81fec.js" crossorigin="anonymous"></script>
+
+ </head>
+ <body>
+    <div class="container">
+        <div class="music-player">
+          <nav>
+            <div class="circle">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+            <div class="circle">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </div>
+        </nav>
+        <img src="lata.avif" class="song-img">
+        <h1 style="color: orange;">Ae Mere Watan Ke Logo</h1>
+        <p style="color: green;">Lata Mangeskar</p>
+        <audio id="song">
+            <source src="Aye Mere Watan Ke Logo - Lata.mp3.crdownload" type="audio/mpeg">
+
+        </audio>
+        <input type="range" value="0" id="progress">
+
+        <div class="controls">
+            <div>
+                <i class="fa-solid fa-backward"></i>
+                
+            </div>
+            <div onclick="playpause()">
+              
+                <i class="fa-solid fa-circle-play" id="ctrlIcon"></i>
+                
+            </div>
+            <div>
+               
+                <i class="fa-solid fa-forward"></i>
+            </div>
+        </div>
+          </div>
+        </div>
+    </div>
+    <script>
+      let progress=document.getElementById("progress");
+      let song=document.getElementById("song");
+      let ctrlIcon=document.getElementById("ctrlIcon");
+      let songImg = document.querySelector(".song-img");
+      song.onloadedmetadata=function(){
+        progress.max=song.duration;
+        progress.value=song.currentTime;
+      }
+
+      function playpause(){
+        if(ctrlIcon.classList.contains("fa-pause")){
+            song.pause();
+            ctrlIcon.classList.remove("fa-pause");
+            ctrlIcon.classList.add("fa-play");
+            songImg.style.animationPlayState = "paused";
+        }
+        else 
+        {
+            song.play();
+            ctrlIcon.classList.add("fa-pause");
+            ctrlIcon.classList.remove("fa-play");
+            songImg.style.animationPlayState = "running";
+        }
+      }
+      if(song.play()){
+        setInterval(()=>{
+         progress.value=song.currentTime;
+        },500);
+      }
+      progress.onchange=function(){
+        song.play();
+        song.currentTime=progress.value;
+        ctrlIcon.classList.add("fa-pause");
+            ctrlIcon.classList.remove("fa-play");
+            songImg.style.animationPlayState = "running";
+      }
+    </script>
+ </body>
+ </html>
